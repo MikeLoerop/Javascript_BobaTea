@@ -1,47 +1,87 @@
-//Get string
-function getValue(){
-    
-    let userString = document.getElementById("userString").value;
 
-    return userString;
 
-}
 
-//Reverse string
-function reverseString(userString){
+function bubbleTeaInit(){
+    let bubbleTeaValues = [];
+    let results = [];
 
-    let finalString = [];
+    bubbleTeaValues = getValues();
+    let validation = validateValues(bubbleTeaValues);
 
-    for (let index = userString.length - 1; index >= 0; index--) {
-        finalString += userString[index];
-        
+    alert(bubbleTeaValues[0] + 'And' + bubbleTeaValues[1]);
+
+    if(validation === true){
+        results = generateResults(bubbleTeaValues);
+
+        displayResults(results);
+
+    }else{
+        alert("You must enter integers");
     }
 
-    return finalString;
 }
 
-//Display string
-function displayString(outputString){
+function getValues () {
+    let bubbleValue = document.getElementById("bubbleValue").value;
+    let teaValue = document.getElementById("teaValue").value;
+    
 
-    //Display result
-    document.getElementById("msg").innerHTML = `Your string reversed is: ${outputString}`
+    //Parse inputs into integers
+    bubbleValue = parseInt(bubbleValue);
+    teaValue = parseInt(teaValue);
 
-    //Display alert
-    document.getElementById("alert").classList.remove("invisible");
+    let bubbleTeaValues = [];
+    bubbleTeaValues[0] = bubbleValue;
+    bubbleTeaValues[1] = teaValue;
 
+    return bubbleTeaValues;
+    
 }
 
-function reverseCall(){
-    //Set Alert to invisible as a precaution
-    document.getElementById("alert").classList.add("invisible");
+function validateValues(bubbleTeaValues){
 
-    //Get the string to reverse
-    let userString = getValue();
+    //Did the user enter integers?
+    if(Number.isInteger(bubbleTeaValues[0]) && Number.isInteger(bubbleTeaValues[1])){    
+        return true;
 
-    //Reverse the string
-    let outputString = [];
-    outputString = reverseString(userString);
+    }else{
+        return false;
+    }
+        
+}
 
-    //Display the reversed string to user
-    displayString(outputString);
+
+
+//Generate numbers from startValue to endValue
+function generateResults(bubbleTeaValues){
+    let numbers = [];
+
+    for (let i = startValue; i <= endValue; i++) {
+        numbers.push(i);
+    }
+
+    return numbers;
+}
+
+//Display the numbers and mark the even numbers bold
+function displayResults(numbers) {
+    let templateRow = "";
+    
+    for (let i = 0; i < numbers.length; i++) {
+        let number = numbers[i];
+
+        let className = "even";
+        if(number % 2 == 0){
+            className
+        }else{
+
+            className = "odd";
+            
+        }
+
+        templateRow += `<tr><td class="${className}">${number}</td><tr>`;
+                
+    }
+
+    document.getElementById("results").innerHTML = templateRow;
 }
